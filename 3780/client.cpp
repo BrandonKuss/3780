@@ -4,6 +4,25 @@
 #include <string>
 #include <bits/stdc++.h>
 
+int checkParity(std::string incoming) {
+    std::string parityCheck;
+    parityCheck = incoming;
+    int currentCount = 0, temp;
+    for (int i = 0; i < parityCheck.length(); i++) {
+        char tmp = parityCheck[i];
+        int translation = static_cast<int>(tmp);
+        currentCount += translation;
+    }
+    while(currentCount != 0 ) {
+        temp = currentCount % 2;
+        currentCount /= 2;
+    }
+    if ((temp % 2) == 0)
+        return 1;
+    else
+        return 0;
+}
+
 int main(int argc, int argv[])
 {
    try{
@@ -18,30 +37,25 @@ int main(int argc, int argv[])
 	 //client_socket << "Test message.";
 	 client_socket >> reply;
 	 int n = reply.length();
-	 std::vector<char> incoming;
-	 char parity;
+	 std::string incoming;
+	 std::string parity;
 	 std::string ackNumber;
-	 /*
-	 char recieved_array[n+1];
-	 strcpy(recieved_array, reply.c_str());
-	 std::vector<char> incoming(std::begin(recieved_array), std::end(recieved_array));
-	 char parity = incoming.pop_back();
-	 std::string ackNumber = incoming.pop_back();
-	 */
-     /*
-	 for(int i = 0; i < reply.length(); i++) {
-        if (i = reply.length())
-            ackNumber = reply[i];
-        if (i = reply.length() - 1)
-            parity = reply[i];
-        incoming.push_back(reply[i]);
+	 incoming = reply.substr(0, n-2);
+	 formattedReply = incoming;
+	 parity = reply.substr(n-2, 1);
+	 ackNumber = reply.substr(n-1,1);
+	 int parityCheck = checkParity(formattedReply);
+	 if (parityCheck = parity) {
+        client_socket << ackNumber;
 	 }
-	 */
-	 client_socket << reply;
+	 else {
+        client_socket << "";
+	 }
+	 //client_socket << ackNumber;
       }
       catch(SocketException&){
       }
-      std::cout << "We received this response from the server:\n\"" << reply << "\"\n";;
+      std::cout << "We received this response from the server:\n\"" << formattedReply << "\"\n";;
    }
    catch(SocketException& e){
       std::cout << "Exception was caught:" << e.description() << "\n";

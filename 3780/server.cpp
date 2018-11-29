@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <bits/stdc++.h>
+#include <cstdlib>
+#include <ctime>
 
 int checkParity(std::string incoming) {
     std::string parityCheck;
@@ -25,6 +27,18 @@ int checkParity(std::string incoming) {
         return 0;
 }
 
+int getSeqNum(int current) {
+    int c = current;
+    if ((c%2) == 0)
+        return 0;
+    else
+        return 1;
+}
+
+void seedRandomGenerator() {
+    srand(time(0));
+}
+
 int main(int argc, int argv[])
 {
    std::cout << "running..\n";
@@ -35,10 +49,10 @@ int main(int argc, int argv[])
       while (true){
 	 ServerSocket new_sock;
 	 server.accept(new_sock);
-	 /*
-     ServerSocket data_sock;
-     server.accept(data_sock);
-     */
+
+     //ServerSocket data_sock;
+     //server.accept(data_sock);
+
 
      std::vector<std::string> toSend;
      std::string currentLine;
@@ -49,7 +63,9 @@ int main(int argc, int argv[])
      }
      bool canSend = true;
      int counter = 0;
+     int seqNum = 0;
      int parity_bit;
+     seedRandomGenerator();
 
 
 	 // For multiple threading, you need to create
@@ -61,19 +77,25 @@ int main(int argc, int argv[])
 	       std::string data;
 	       if (canSend) {
             std::string sending = toSend[counter];
-            sending.append(std::to_string(counter));
+            seqNum = getSeqNum(counter);
+            sending.append(std::to_string(seqNum));
             parity_bit = checkParity(toSend[counter]);
+            int rng = rand() % 5;
+            if (rng = 2)
+                parity_bit = (parity_bit + 1) % 2;
             sending.append(std::to_string(parity_bit));
             new_sock << sending;
 	       }
 	       new_sock >> data;
-	       int n = data.length();
-	       char incoming_array[n+1];
-	       strcpy(incoming_array, data.c_str());
-	       if (incoming_array[n - 2] == counter) {
+	       std::string reply = data;
+	       if ((reply == std::to_string(seqNum)) == 0) {
                 canSend = true;
                 counter ++;
-	       };
+	       }
+	       else {
+            canSend = true;
+	       }
+	       continue;
 	       //new_sock << data;
 	    }
 	 }
