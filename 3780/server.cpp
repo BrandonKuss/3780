@@ -9,7 +9,7 @@
 #include <ctime>
 
 
-int checkParity(std::string incoming)
+std::string checkParity(std::string incoming)
 {
     std::string parityCheck;
     parityCheck = incoming;
@@ -26,9 +26,9 @@ int checkParity(std::string incoming)
         currentCount /= 2;
     }
     if ((temp % 2) == 0)
-        return 1;
+        return "1";
     else
-        return 0;
+        return "0";
 }
 
 std::string getSeqNum(int current)
@@ -74,7 +74,9 @@ int main(int argc, int argv[])
             bool canSend = true;
             int counter = 0;
             std::string seqNum;
-            int parity_bit;
+            std::string reply;
+            std::string parity_bit;
+            std::string data;
             seedRandomGenerator();
 
 
@@ -86,31 +88,24 @@ int main(int argc, int argv[])
             {
                 while (true)
                 {
-                    std::string data;
-                    if (canSend)
+                    for (int i = 0; i < toSend.size(); i++)
                     {
-                        std::string sending = toSend[counter];
-                        seqNum = getSeqNum(counter);
-                        sending.append(seqNum);
-                        parity_bit = checkParity(toSend[counter]);
-                        int rng = rand() % 5;
-                        if (rng = 1)
-                            parity_bit = (parity_bit + 1) % 2;
-                        sending.append(std::to_string(parity_bit));
-                        data_sock << sending;
+                        do {
+                            std::string sending = toSend[i];
+                            seqNum = getSeqNum(i);
+                            parity_bit = checkParity(toSend[i]);
+                            sending.append(seqNum);
+                            int rng = rand() % 5;
+                            //if (rng = 1)
+                                //parity_bit = (stoi(parity_bit) + 1) % 2;
+                            sending.append(parity_bit);
+                            data_sock << sending;
+                        listening_sock >> data;
+                        std::string reply = data;
+                        if (i = toSend.size())
+                            break;
                     }
-                    listening_sock >> data;
-                    std::string reply = data;
-                    if (reply == seqNum)
-                    {
-                        canSend = true;
-                        counter++;
-                    }
-                    else
-                    {
-                        canSend = true;
-                    }
-                    //new_sock << data;
+                    while (reply != seqNum);}
                 }
             }
             catch(SocketException&)

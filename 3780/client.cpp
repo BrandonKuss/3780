@@ -4,7 +4,7 @@
 #include <string>
 #include <bits/stdc++.h>
 
-int checkParity(std::string incoming)
+std::string checkParity(std::string incoming)
 {
     std::string parityCheck;
     parityCheck = incoming;
@@ -21,9 +21,9 @@ int checkParity(std::string incoming)
         currentCount /= 2;
     }
     if ((temp % 2) == 0)
-        return 1;
+        return "1";
     else
-        return 0;
+        return "0";
 }
 
 int main(int argc, int argv[])
@@ -53,9 +53,9 @@ int main(int argc, int argv[])
                 formattedReply = incoming;
                 parity = reply.substr(n-1, 1);
                 ackNumber = reply.substr(n-2,1);
-                int parityCheck = checkParity(formattedReply);
-                std::cout << ackNumber;
-                if (std::to_string(parityCheck) == parity)
+                std::string parityCheck = checkParity(formattedReply);
+                std::cout << parity << " " << parityCheck << " " << ackNumber << " " << reply;
+                if (parityCheck == parity)
                 {
                     client_socket << ackNumber;
                 }
@@ -63,7 +63,6 @@ int main(int argc, int argv[])
                 {
                     client_socket << "";
                 }
-                //client_socket << ackNumber;
             }
             catch(SocketException&)
             {
