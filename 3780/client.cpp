@@ -4,11 +4,11 @@
 #include <string>
 #include <bits/stdc++.h>
 
-std::string checkParity(std::string incoming)
+std::string checkParity(std::string inc)
 {
     std::string parityCheck;
-    parityCheck = incoming;
-    int currentCount = 0, temp;
+    parityCheck = inc;
+    int currentCount = 0, temp = 0;
     for (int i = 0; i < parityCheck.length(); i++)
     {
         char tmp = parityCheck[i];
@@ -17,10 +17,10 @@ std::string checkParity(std::string incoming)
     }
     while(currentCount != 0 )
     {
-        temp = currentCount % 2;
+        temp += currentCount % 2;
         currentCount /= 2;
     }
-    if ((temp % 2) == 0)
+    if ((temp % 2) != 0)
         return "1";
     else
         return "0";
@@ -45,6 +45,13 @@ int main(int argc, int argv[])
                 //client_socket << "Test message.";
 
                 listening_socket >> reply;
+                if (reply == "EOF") {
+                    std::cout << "Press any key to continue";
+                    std::cin.clear();
+                    char temp;
+                    std::cin.get(temp);
+                    std::cin.ignore(100, '\n');
+                }
                 int n = reply.length();
                 std::string incoming;
                 std::string parity;
@@ -53,15 +60,17 @@ int main(int argc, int argv[])
                 formattedReply = incoming;
                 parity = reply.substr(n-1, 1);
                 ackNumber = reply.substr(n-2,1);
-                std::string parityCheck = checkParity(formattedReply);
+                std::string parityCheck;
+                parityCheck = checkParity(formattedReply);
                 std::cout << parity << " " << parityCheck << " " << ackNumber << " " << reply;
                 if (parityCheck == parity)
                 {
-                    client_socket << ackNumber;
+                    std::string ackReply = ackNumber;
+                    client_socket << ackReply;
                 }
                 else
                 {
-                    client_socket << "";
+                    client_socket << parityCheck;
                 }
             }
             catch(SocketException&)
