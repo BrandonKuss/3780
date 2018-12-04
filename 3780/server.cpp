@@ -13,7 +13,7 @@ std::string checkParity(std::string incoming)
 {
     std::string parityCheck;
     parityCheck = incoming;
-    int currentCount = 0, temp;
+    int currentCount = 0, temp = 0;
     for (int i = 0; i < parityCheck.length(); i++)
     {
         char tmp = parityCheck[i];
@@ -22,10 +22,10 @@ std::string checkParity(std::string incoming)
     }
     while(currentCount != 0 )
     {
-        temp = currentCount % 2;
+        temp += currentCount % 2;
         currentCount /= 2;
     }
-    if ((temp % 2) == 0)
+    if ((temp % 2) != 0)
         return "1";
     else
         return "0";
@@ -72,7 +72,7 @@ int main(int argc, int argv[])
                 toSend.push_back(currentLine);
             }
             bool canSend = true;
-            int counter = 0;
+            int i = 0;
             std::string seqNum;
             std::string reply;
             std::string parity_bit;
@@ -88,26 +88,40 @@ int main(int argc, int argv[])
             {
                 while (true)
                 {
-                    for (int i = 0; i < toSend.size(); i++)
+                    for (i = 0; i < toSend.size(); i++)
                     {
-                        do {
+                        if (i == toSend.size()-1){
+                               std::string eof;
+                               eof = "EOF";
+                               data_sock << eof;
+                               break;
+                            }
+                        do
+                        {
                             std::string sending = toSend[i];
                             seqNum = getSeqNum(i);
                             parity_bit = checkParity(toSend[i]);
                             sending.append(seqNum);
                             int rng = rand() % 5;
-                            //if (rng = 1)
-                                //parity_bit = (stoi(parity_bit) + 1) % 2;
+                            if (rng == 1)
+                            {
+                                if (parity_bit == "1")
+                                    parity_bit = checkParity("0");
+                                else
+                                    parity_bit = checkParity("1");
+                            }
                             sending.append(parity_bit);
                             data_sock << sending;
-                        listening_sock >> data;
-                        std::string reply = data;
-                        if (i = toSend.size())
-                            break;
+                            listening_sock >> data;
+                            std::string reply = data;
+                        }
+                        while (data != seqNum);
                     }
-                    while (reply != seqNum);}
+
                 }
             }
+
+
             catch(SocketException&)
             {
             }

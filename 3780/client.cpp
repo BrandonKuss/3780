@@ -62,6 +62,7 @@ int main(int argc, int argv[])
                 ackNumber = reply.substr(n-2,1);
                 std::string parityCheck;
                 parityCheck = checkParity(formattedReply);
+                std::cout << parity << " " << parityCheck << " " << ackNumber << " " << reply;
                 if (parityCheck == parity)
                 {
                     std::string ackReply = ackNumber;

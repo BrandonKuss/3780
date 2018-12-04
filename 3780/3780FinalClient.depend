@@ -1,0 +1,34 @@
+# depslib dependency file v1.0
+1543867665 source:/home/sanj3780/Documents/3780-master/3780/Socket.cpp
+	"Socket.h"
+	<string.h>
+	<errno.h>
+	<fcntl.h>
+
+1543867665 /home/sanj3780/Documents/3780-master/3780/Socket.h
+	<string>
+	<iostream>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netdb.h>
+	<unistd.h>
+	<arpa/inet.h>
+
+1543877330 source:/home/sanj3780/Documents/3780-master/3780/client.cpp
+	"ClientSocket.h"
+	"SocketException.h"
+	<iostream>
+	<string>
+	<bits/stdc++.h>
+
+1543867665 /home/sanj3780/Documents/3780-master/3780/ClientSocket.h
+	"Socket.h"
+
+1543867665 /home/sanj3780/Documents/3780-master/3780/SocketException.h
+	<string>
+
+1543867665 source:/home/sanj3780/Documents/3780-master/3780/ClientSocket.cpp
+	"ClientSocket.h"
+	"SocketException.h"
+
