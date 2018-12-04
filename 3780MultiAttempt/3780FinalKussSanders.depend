@@ -1,0 +1,76 @@
+# depslib dependency file v1.0
+1543877432 source:/home/sanj3780/Documents/3780-master/3780/server.cpp
+	"ServerSocket.h"
+	"SocketException.h"
+	<string>
+	<vector>
+	<fstream>
+	<iostream>
+	<bits/stdc++.h>
+	<cstdlib>
+	<ctime>
+
+1543867665 /home/sanj3780/Documents/3780-master/3780/ServerSocket.h
+	"Socket.h"
+
+1543867665 /home/sanj3780/Documents/3780-master/3780/Socket.h
+	<string>
+	<iostream>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netdb.h>
+	<unistd.h>
+	<arpa/inet.h>
+
+1543867665 /home/sanj3780/Documents/3780-master/3780/SocketException.h
+	<string>
+
+1543867665 source:/home/sanj3780/Documents/3780-master/3780/ServerSocket.cpp
+	"ServerSocket.h"
+	"SocketException.h"
+
+1543867665 source:/home/sanj3780/Documents/3780-master/3780/Socket.cpp
+	"Socket.h"
+	<string.h>
+	<errno.h>
+	<fcntl.h>
+
+1543867665 source:/home/sanj3780/Documents/3780-master/3780MultiAttempt/ServerSocket.cpp
+	"ServerSocket.h"
+	"SocketException.h"
+
+1543867665 /home/sanj3780/Documents/3780-master/3780MultiAttempt/ServerSocket.h
+	"Socket.h"
+
+1543867665 /home/sanj3780/Documents/3780-master/3780MultiAttempt/Socket.h
+	<string>
+	<iostream>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netdb.h>
+	<unistd.h>
+	<arpa/inet.h>
+
+1543867665 /home/sanj3780/Documents/3780-master/3780MultiAttempt/SocketException.h
+	<string>
+
+1543867665 source:/home/sanj3780/Documents/3780-master/3780MultiAttempt/Socket.cpp
+	"Socket.h"
+	<string.h>
+	<errno.h>
+	<fcntl.h>
+
+1543945626 source:/home/sanj3780/Documents/3780-master/3780MultiAttempt/server.cpp
+	"ServerSocket.h"
+	"SocketException.h"
+	<string>
+	<vector>
+	<fstream>
+	<iostream>
+	<bits/stdc++.h>
+	<cstdlib>
+	<ctime>
+	<pthread.h>
+
